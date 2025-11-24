@@ -76,7 +76,7 @@ FAIR Beacon includes WP-CLI commands for PLC management. Ensure WP-CLI is instal
    ```
 2. Verify the REST API endpoint is working:
    ```bash
-   curl http://your-site.local/wp-json/fair_beacon/v1/packages
+   curl http://your-site.local/wp-json/fair-beacon/v1/packages
    ```
 3. Access the FAIR Beacon admin page at:
    `http://your-site.local/wp-admin/admin.php?page=fair-beacon`
@@ -98,7 +98,7 @@ fair-beacon/
 ### Key Components
 - **PLC Integration**: Handles Decentralized Identifiers (DIDs) for packages
 - **Git Updater Provider**: Integrates with Git Updater for package management
-- **REST API**: Provides endpoints for package metadata (`/wp-json/fair_beacon/v1/packages/{did}`)
+- **REST API**: Provides endpoints for package metadata (`/wp-json/fair-beacon/v1/packages/{did}`)
 - **Admin Interface**: WordPress dashboard integration for managing DIDs and packages
 ### Making Changes
 1. **PHP Code**: Edit files in the `inc/` directory
@@ -139,7 +139,7 @@ Theme URI: Https://...
 ```
 Ensure your plugin or theme is set up correctly with [Git Updater](https://git-updater.com/knowledge-base/), and that you’re using the same site as you registered your DID with.
 Once that’s done, you’re ready to go - your package should integrate automatically with the FAIR system! You can use the [FAIR Plugin](https://github.com/fairpm/fair-plugin) to install your package directly by ID, and once it’s been installed once, discovery aggregators will start to list it.
-You can double-check your packages by checking the REST API endpoint at `/wp-json/fair_beacon/v1/packages/{did}` (replace `{did}` with your package’s DID).
+You can double-check your packages by checking the REST API endpoint at `/wp-json/fair-beacon/v1/packages/{did}` (replace `{did}` with your package’s DID).
 ## Contributing
 We welcome contributions! Please see [the TSC repository](https://github.com/fairpm/tsc) for contribution guidelines, including the code of conduct.
 ### Development Setup for Contributors
