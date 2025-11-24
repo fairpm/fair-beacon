@@ -8,9 +8,9 @@
 namespace FAIR\Beacon\PLC;
 
 use Exception;
-use JsonSerializable;
 use FAIR\Beacon\Keys;
 use FAIR\Beacon\Keys\Key;
+use JsonSerializable;
 
 /**
  * Operation class.

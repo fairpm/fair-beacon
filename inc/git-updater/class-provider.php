@@ -7,10 +7,10 @@
 
 namespace FAIR\Beacon\Git_Updater;
 
-use Fragen\Singleton;
 use FAIR\Beacon\API\MetadataDocument;
 use FAIR\Beacon\PLC\DID;
 use FAIR\Beacon\Provider as ProviderInterface;
+use Fragen\Singleton;
 use stdClass;
 use WP_Error;
 use WP_Http;
