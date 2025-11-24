@@ -2,12 +2,12 @@
 /**
  * Provider.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR;
+namespace FAIR\Beacon;
 
-use MiniFAIR\PLC\DID;
+use FAIR\Beacon\PLC\DID;
 
 /**
  * Provider interface.

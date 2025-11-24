@@ -2,10 +2,10 @@
 /**
  * PLC namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use CBOR\OtherObject\NullObject;
 use CBOR\{
@@ -13,9 +13,9 @@ use CBOR\{
 	MapItem,
 	TextStringObject,
 };
-use MiniFAIR\Admin;
-use MiniFAIR\Keys;
-use MiniFAIR\Keys\Key;
+use FAIR\Beacon\Admin;
+use FAIR\Beacon\Keys;
+use FAIR\Beacon\Keys\Key;
 use WP_CLI;
 use YOCLIB\Multiformats\Multibase\Multibase;
 
@@ -47,16 +47,16 @@ function register_types() : void {
 		'show_in_rest' => false,
 		// 'can_export' => false,
 		'supports' => [ 'title', 'editor', 'custom-fields' ],
-		'label' => __( 'PLC DIDs', 'mini-fair' ),
+		'label' => __( 'PLC DIDs', 'fair-beacon' ),
 		'labels' => [
-			'menu_name' => __( 'PLC DIDs', 'mini-fair' ),
-			'singular_name' => __( 'PLC DID', 'mini-fair' ),
-			'add_new_item' => __( 'Add New PLC DID', 'mini-fair' ),
-			'edit_item' => __( 'Edit PLC DID', 'mini-fair' ),
-			'all_items' => __( 'All PLC DIDs', 'mini-fair' ),
-			'search_items' => __( 'Search PLC DIDs', 'mini-fair' ),
-			'not_found' => __( 'No PLC DIDs found', 'mini-fair' ),
-			'not_found_in_trash' => __( 'No PLC DIDs found in Trash', 'mini-fair' ),
+			'menu_name' => __( 'PLC DIDs', 'fair-beacon' ),
+			'singular_name' => __( 'PLC DID', 'fair-beacon' ),
+			'add_new_item' => __( 'Add New PLC DID', 'fair-beacon' ),
+			'edit_item' => __( 'Edit PLC DID', 'fair-beacon' ),
+			'all_items' => __( 'All PLC DIDs', 'fair-beacon' ),
+			'search_items' => __( 'Search PLC DIDs', 'fair-beacon' ),
+			'not_found' => __( 'No PLC DIDs found', 'fair-beacon' ),
+			'not_found_in_trash' => __( 'No PLC DIDs found in Trash', 'fair-beacon' ),
 		],
 	] );
 }

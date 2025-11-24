@@ -2,10 +2,10 @@
 /**
  * Key.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Keys;
+namespace FAIR\Beacon\Keys;
 
 /**
  * Key interface.

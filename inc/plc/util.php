@@ -2,10 +2,10 @@
 /**
  * PLC utilities.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC\Util;
+namespace FAIR\Beacon\PLC\Util;
 
 use Exception;
 

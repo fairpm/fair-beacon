@@ -2,10 +2,10 @@
 /**
  * ECKey.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Keys;
+namespace FAIR\Beacon\Keys;
 
 use Elliptic\EC;
 use Elliptic\EC\KeyPair;
