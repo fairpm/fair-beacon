@@ -166,7 +166,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 		$opt['headers']['If-None-Match'] = $artifact_metadata['etag'];
 	}
 
-	$res = \FAIR\Beacon\get_remote_url( $url, $opt );
+	$res = Beacon\get_remote_url( $url, $opt );
 	if ( is_wp_error( $res ) ) {
 		return $res;
 	}

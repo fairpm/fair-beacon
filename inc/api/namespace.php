@@ -91,7 +91,7 @@ function get_package_data( WP_REST_Request $request ) {
 		);
 	}
 
-	foreach ( \FAIR\Beacon\get_providers() as $provider ) {
+	foreach ( Beacon\get_providers() as $provider ) {
 		if ( ! $provider->is_authoritative( $did ) ) {
 			continue;
 		}
@@ -109,7 +109,7 @@ function get_package_data( WP_REST_Request $request ) {
 		);
 	}
 
-	set_transient( 'fair-metadata-endpoint-' . $id, $response, \FAIR\Beacon\CACHE_LIFETIME );
+	set_transient( 'fair-metadata-endpoint-' . $id, $response, Beacon\CACHE_LIFETIME );
 
 	return $response;
 }
@@ -120,7 +120,7 @@ function get_package_data( WP_REST_Request $request ) {
  * @return array
  */
 function get_packages() {
-	return array_filter( \FAIR\Beacon\get_available_packages(),
+	return array_filter( Beacon\get_available_packages(),
 		function ( $package_did ) {
 			return null !== DID::get( $package_did );
 		}
