@@ -95,7 +95,7 @@ function render_settings_page() {
 	$missing_dids = [];
 	foreach ( $invalid as $id => $error ) {
 		$error_code = $error->get_error_code();
-		if ( 'minifair.git_updater.missing_did' === $error_code ) {
+		if ( 'fair_beacon.git_updater.missing_did' === $error_code ) {
 			$missing_dids[ $id ] = $error;
 		}
 	}
