@@ -51,7 +51,7 @@ class Provider implements ProviderInterface {
 			if ( empty( $pkg->did ) ) {
 				$problems[ $pkg->file ] = new WP_Error(
 					'fair_beacon.git_updater.missing_did',
-					sprintf( __( 'Package %s is missing a DID. Specify it in the Plugin ID/Theme ID header.', 'mini-fair' ), $pkg->name ),
+					sprintf( __( 'Package %s is missing a DID. Specify it in the Plugin ID/Theme ID header.', 'fair-beacon' ), $pkg->name ),
 					[ 'status' => WP_Http::NOT_FOUND ]
 				);
 				continue;
@@ -61,7 +61,7 @@ class Provider implements ProviderInterface {
 			if ( empty( $did ) ) {
 				$problems[ $pkg->file ] = new WP_Error(
 					'fair_beacon.git_updater.invalid_did',
-					sprintf( __( "Package %s has a DID (%s), but the DID's keys are not registered on this site.", 'mini-fair' ), $pkg->name, $pkg->did ),
+					sprintf( __( "Package %s has a DID (%s), but the DID's keys are not registered on this site.", 'fair-beacon' ), $pkg->name, $pkg->did ),
 					[ 'status' => WP_Http::NOT_FOUND ]
 				);
 				continue;
@@ -108,7 +108,7 @@ class Provider implements ProviderInterface {
 		if ( ! $package ) {
 			return new WP_Error(
 				'fair_beacon.get_package.not_found',
-				__( 'Package not found.', 'mini-fair' ),
+				__( 'Package not found.', 'fair-beacon' ),
 				[ 'status' => WP_Http::NOT_FOUND ]
 			);
 		}
@@ -251,7 +251,7 @@ class Provider implements ProviderInterface {
 		if ( ! $package ) {
 			return new WP_Error(
 				'fair_beacon.get_package.not_found',
-				__( 'Package not found.', 'mini-fair' ),
+				__( 'Package not found.', 'fair-beacon' ),
 				[ 'status' => WP_Http::NOT_FOUND ]
 			);
 		}
@@ -309,7 +309,7 @@ class Provider implements ProviderInterface {
 
 		$err = new WP_Error(
 			'fair_beacon.update_fair_data.error',
-			__( 'Error updating FAIR data for repository.', 'mini-fair' )
+			__( 'Error updating FAIR data for repository.', 'fair-beacon' )
 		);
 		foreach ( $errors as $error ) {
 			$err->merge_from( $error );

@@ -44,7 +44,7 @@ function register_routes() : void {
 					if ( ! preg_match( '/^did:plc:[\w-]+$/', $param ) ) {
 						return new WP_Error(
 							'fair_beacon.get_package.invalid_id',
-							__( 'Invalid package ID.', 'mini-fair' ),
+							__( 'Invalid package ID.', 'fair-beacon' ),
 							[ 'status' => WP_Http::BAD_REQUEST ]
 						);
 					}
@@ -86,7 +86,7 @@ function get_package_data( WP_REST_Request $request ) {
 	if ( empty( $did ) ) {
 		return new WP_Error(
 			'fair_beacon.get_package.not_found',
-			__( 'Package not found.', 'mini-fair' ),
+			__( 'Package not found.', 'fair-beacon' ),
 			[ 'status' => WP_Http::NOT_FOUND ]
 		);
 	}
@@ -104,7 +104,7 @@ function get_package_data( WP_REST_Request $request ) {
 	if ( empty( $response ) ) {
 		return new WP_Error(
 			'fair_beacon.get_package.not_found',
-			__( 'Package not found.', 'mini-fair' ),
+			__( 'Package not found.', 'fair-beacon' ),
 			[ 'status' => WP_Http::NOT_FOUND ]
 		);
 	}

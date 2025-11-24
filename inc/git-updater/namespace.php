@@ -109,7 +109,7 @@ function update_fair_data( $repo, $repo_api ) : ?WP_Error {
 
 	$err = new WP_Error(
 		'fair_beacon.update_fair_data.error',
-		__( 'Error updating FAIR data for repository.', 'mini-fair' )
+		__( 'Error updating FAIR data for repository.', 'fair-beacon' )
 	);
 	foreach ( $errors as $error ) {
 		$err->merge_from( $error );
@@ -142,7 +142,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 	if ( empty( $keys ) ) {
 		return new WP_Error(
 			'fair_beacon.generate_artifact_metadata.missing_keys',
-			__( 'No verification keys found for DID', 'mini-fair' )
+			__( 'No verification keys found for DID', 'fair-beacon' )
 		);
 	}
 
@@ -151,7 +151,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 	if ( empty( $signing_key ) ) {
 		return new WP_Error(
 			'fair_beacon.generate_artifact_metadata.missing_signing_key',
-			__( 'No signing key found for DID', 'mini-fair' )
+			__( 'No signing key found for DID', 'fair-beacon' )
 		);
 	}
 
@@ -179,7 +179,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 		// Handle unexpected response code.
 		return new WP_Error(
 			'fair_beacon.artifact.fetch_error',
-			sprintf( __( 'Error fetching artifact: %s', 'mini-fair' ), $res['response']['code'] ),
+			sprintf( __( 'Error fetching artifact: %s', 'fair-beacon' ), $res['response']['code'] ),
 			[ 'status' => $res['response']['code'] ]
 		);
 	}
