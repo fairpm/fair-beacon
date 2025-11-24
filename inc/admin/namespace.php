@@ -100,7 +100,7 @@ function render_settings_page() {
 		<?php
 			printf(
 				__( 'FAIR Beacon is active on your site. View your active packages at <a href="%1$s"><code>%1$s</code></a>', 'fair-beacon' ),
-				esc_url( rest_url( '/fair_beacon/v1/packages' ) )
+				esc_url( rest_url( '/fair-beacon/v1/packages' ) )
 			);
 		?>
 		</p>

@@ -79,7 +79,7 @@ FAIR Beacon includes WP-CLI commands for PLC management. Ensure WP-CLI is instal
    curl http://your-site.local/wp-json/fair_beacon/v1/packages
    ```
 3. Access the FAIR Beacon admin page at:
-   `http://your-site.local/wp-admin/admin.php?page=fair_beacon`
+   `http://your-site.local/wp-admin/admin.php?page=fair-beacon`
 ## Development Workflow
 ### Project Structure
 ```

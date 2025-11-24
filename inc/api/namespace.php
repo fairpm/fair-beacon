@@ -14,7 +14,7 @@ use WP_Http;
 use WP_REST_Request;
 use WP_REST_Server;
 
-const REST_NAMESPACE = 'fair_beacon/v1';
+const REST_NAMESPACE = 'fair-beacon/v1';
 
 /**
  * Bootstrap.
