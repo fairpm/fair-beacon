@@ -92,6 +92,19 @@ function render_settings_page() {
 	foreach ( $providers as $provider ) {
 		$invalid = array_merge( $invalid, $provider->get_invalid() );
 	}
+	$missing_dids = [];
+	$locally_invalid_dids = [];
+	foreach ( $invalid as $id => $error ) {
+		$error_code = $error->get_error_code();
+		if ( 'minifair.git_updater.missing_did' === $error_code ) {
+			$missing_dids[ $id ] = $error;
+			continue;
+		}
+		if ( 'minifair.git_updater.invalid_did' === $error_code ) {
+			$locally_invalid_dids[ $id ] = $error;
+		}
+	}
+
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Mini FAIR', 'mini-fair' ); ?></h1>
@@ -138,7 +151,7 @@ function render_settings_page() {
 				<?php endforeach; ?>
 		</table>
 
-		<?php if ( ! empty( $invalid ) ) : ?>
+		<?php if ( ! empty( $missing_dids ) ) : ?>
 			<h2><?php esc_html_e( 'Invalid Packages', 'mini-fair' ); ?></h2>
 			<table class="wp-list-table widefat fixed striped">
 				<thead>
@@ -148,7 +161,27 @@ function render_settings_page() {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ( $invalid as $id => $error ) : ?>
+					<?php foreach ( $missing_dids as $id => $error ) : ?>
+						<tr>
+							<td><code><?php echo esc_html( $id ); ?></code></td>
+							<td><?php echo esc_html( $error->get_error_message() ); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+
+		<?php if ( ! empty( $locally_invalid_dids ) ) : ?>
+			<h2><?php esc_html_e( 'Other Packages', 'mini-fair' ); ?></h2>
+			<table class="wp-list-table widefat fixed striped">
+				<thead>
+					<tr>
+						<th scope="col"><?php esc_html_e( 'Package ID', 'mini-fair' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Error', 'mini-fair' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ( $locally_invalid_dids as $id => $error ) : ?>
 						<tr>
 							<td><code><?php echo esc_html( $id ); ?></code></td>
 							<td><?php echo esc_html( $error->get_error_message() ); ?></td>
