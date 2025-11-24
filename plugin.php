@@ -7,7 +7,7 @@
  * License: GPLv2
  * Requires at least: 6.4
  * Requires PHP: 8.3
- * Text Domain: mini-fair
+ * Text Domain: fair-beacon
  */
 
 namespace FAIR\Beacon;

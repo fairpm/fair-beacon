@@ -21,7 +21,7 @@
 	<config name="minimum_supported_wp_version" value="6.4"/>
 
 	<!-- Set the text domain -->
-	<config name="text_domain" value="mini-fair"/>
+	<config name="text_domain" value="fair-beacon"/>
 
 	<!-- Ignore PHP-related errors. -->
 	<ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />

@@ -34,11 +34,11 @@ This will install the required packages:
    - [Docker](https://github.com/docker/awesome-compose/tree/master/wordpress-mysql)
 2. Copy the FAIR Beacon plugin to your WordPress plugins directory:
    ```bash
-   cp -r /path/to/fair-beacon /path/to/wordpress/wp-content/plugins/mini-fair
+   cp -r /path/to/fair-beacon /path/to/wordpress/wp-content/plugins/fair-beacon
    ```
 3. Activate the plugin through the WordPress admin interface or via WP-CLI:
    ```bash
-   wp plugin activate mini-fair
+   wp plugin activate fair-beacon
    ```
 #### Option B: Using WP-CLI for Development
 If you have WP-CLI installed, you can quickly set up a development environment:
@@ -48,9 +48,9 @@ wp core download
 wp config create --dbname=fair_beacon_dev --dbuser=root --dbpass=password
 wp core install --url=http://localhost --title=“FAIR Beacon Dev” --admin_user=admin --admin_password=password --admin_email=admin@example.com
 # Create a symlink to the plugin
-ln -s /path/to/fair-beacon wp-content/plugins/mini-fair
+ln -s /path/to/fair-beacon wp-content/plugins/fair-beacon
 # Activate the plugin
-wp plugin activate mini-fair
+wp plugin activate fair-beacon
 ```
 ### 4. Install Git Updater
 FAIR Beacon requires Git Updater for package management:
