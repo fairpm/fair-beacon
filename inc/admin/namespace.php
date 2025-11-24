@@ -85,8 +85,8 @@ function render_settings_page() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
-	$providers = FAIR\Beacon\get_providers();
-	$packages = FAIR\Beacon\get_available_packages();
+	$providers = \FAIR\Beacon\get_providers();
+	$packages = \FAIR\Beacon\get_available_packages();
 
 	$invalid = [];
 	foreach ( $providers as $provider ) {
@@ -122,7 +122,7 @@ function render_settings_page() {
 						if ( ! $did ) {
 							continue;
 						}
-						$data = FAIR\Beacon\get_package_metadata( $did );
+						$data = \FAIR\Beacon\get_package_metadata( $did );
 						$security_contact = array_reduce(
 							$data->security,
 							fn ( $all, $current ) => array_merge( $all, array_values( $current ) ),
@@ -372,7 +372,7 @@ function on_resign( DID $did ) {
 	}
 
 	try {
-		FAIR\Beacon\update_metadata( $did, true );
+		\FAIR\Beacon\update_metadata( $did, true );
 		wp_redirect( get_edit_post_link( $did->get_internal_post_id(), 'raw' ) );
 		exit;
 	} catch ( \Exception $e ) {

@@ -17,8 +17,14 @@ require __DIR__ . '/inc/admin/namespace.php';
 require __DIR__ . '/inc/api/namespace.php';
 require __DIR__ . '/inc/git-updater/namespace.php';
 require __DIR__ . '/inc/keys/namespace.php';
-require __DIR__ . '/inc/plc/namespace.php';
+require __DIR__ . '/inc/plc/class-canonicalmapobject.php';
+require __DIR__ . '/inc/plc/class-cidtag.php';
+require __DIR__ . '/inc/plc/class-command.php';
+require __DIR__ . '/inc/plc/class-did.php';
+require __DIR__ . '/inc/plc/class-operation.php';
+require __DIR__ . '/inc/plc/class-signedoperation.php';
 require __DIR__ . '/inc/plc/util.php';
+require __DIR__ . '/inc/plc/namespace.php';
 require __DIR__ . '/vendor/autoload.php';
 
 bootstrap();
