@@ -1,5 +1,9 @@
 # FAIR Beacon Repo
 The FAIR Beacon plugin transforms your site into a [FAIR Repository](https://github.com/fairpm/fair-protocol), allowing you to serve packages directly from your own infrastructure into the FAIR system.
+
+> [!NOTE]  
+> This plugin has recently been renamed FAIR Beacon, instead of "Mini FAIR". That's why issues might still reference it as such.
+
 ## Design Goals
 FAIR Beacon is designed to allow plugin and theme vendors to host their own FAIR repository easily, integrating with tools they’re already using. FAIR Beacon is built for small scale hosting for a few packages, not for general use as a mass-hosting repository.
 
@@ -7,7 +11,7 @@ We aim to make it possible for everyone to run FAIR Beacon, with a focus on ease
 ## Requirements
 - PHP 8.3 or higher
 - WordPress 6.4 or higher
-- [Persistant Object Cache](https://developer.wordpress.org/reference/classes/wp_object_cache/#persistent-caching)
+- [Persistent Object Cache](https://developer.wordpress.org/reference/classes/wp_object_cache/#persistent-caching)
 - [Composer](https://getcomposer.org/) for dependency management
 - [Git Updater](https://git-updater.com/) plugin (for integration)
 ## Local Installation & Development Setup
