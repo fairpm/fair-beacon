@@ -2,15 +2,15 @@
 /**
  * The Git Updater namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Git_Updater;
+namespace FAIR\Beacon\Git_Updater;
 
-use MiniFAIR;
-use MiniFAIR\Keys\Key;
-use MiniFAIR\PLC\DID;
-use MiniFAIR\PLC\Util;
+use FAIR\Beacon;
+use FAIR\Beacon\Keys\Key;
+use FAIR\Beacon\PLC\DID;
+use FAIR\Beacon\PLC\Util;
 use stdClass;
 use WP_Error;
 
@@ -34,7 +34,7 @@ function on_load() : void {
 		return;
 	}
 
-	add_filter( 'minifair.providers', __NAMESPACE__ . '\\register_provider' );
+	add_filter( 'fair_beacon.providers', __NAMESPACE__ . '\\register_provider' );
 	add_action( 'get_remote_repo_meta', __NAMESPACE__ . '\\update_on_get_remote_meta', 20, 2 );
 }
 
@@ -108,7 +108,7 @@ function update_fair_data( $repo, $repo_api ) : ?WP_Error {
 	}
 
 	$err = new WP_Error(
-		'minifair.update_fair_data.error',
+		'fair_beacon.update_fair_data.error',
 		__( 'Error updating FAIR data for repository.', 'mini-fair' )
 	);
 	foreach ( $errors as $error ) {
@@ -126,7 +126,7 @@ function update_fair_data( $repo, $repo_api ) : ?WP_Error {
  */
 function get_artifact_metadata( DID $did, $url ) {
 	$artifact_id = sprintf( '%s:%s', $did->id, substr( sha1( $url ), 0, 8 ) );
-	return get_option( 'minifair_artifact_' . $artifact_id, null );
+	return get_option( 'fair_beacon_artifact_' . $artifact_id, null );
 }
 
 /**
@@ -141,7 +141,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 	$keys = $did->get_verification_keys();
 	if ( empty( $keys ) ) {
 		return new WP_Error(
-			'minifair.generate_artifact_metadata.missing_keys',
+			'fair_beacon.generate_artifact_metadata.missing_keys',
 			__( 'No verification keys found for DID', 'mini-fair' )
 		);
 	}
@@ -150,13 +150,13 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 	$signing_key = end( $keys );
 	if ( empty( $signing_key ) ) {
 		return new WP_Error(
-			'minifair.generate_artifact_metadata.missing_signing_key',
+			'fair_beacon.generate_artifact_metadata.missing_signing_key',
 			__( 'No signing key found for DID', 'mini-fair' )
 		);
 	}
 
 	$artifact_id = sprintf( '%s:%s', $did->id, substr( sha1( $url ), 0, 8 ) );
-	$artifact_metadata = get_option( 'minifair_artifact_' . $artifact_id, null );
+	$artifact_metadata = get_option( 'fair_beacon_artifact_' . $artifact_id, null );
 
 	// Fetch the artifact.
 	$opt = str_contains( $url, 'api.github.com' ) && str_contains( $url, 'releases/assets' )
@@ -166,7 +166,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 		$opt['headers']['If-None-Match'] = $artifact_metadata['etag'];
 	}
 
-	$res = MiniFAIR\get_remote_url( $url, $opt );
+	$res = FAIR\Beacon\get_remote_url( $url, $opt );
 	if ( is_wp_error( $res ) ) {
 		return $res;
 	}
@@ -178,7 +178,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 	if ( 200 !== $res['response']['code'] ) {
 		// Handle unexpected response code.
 		return new WP_Error(
-			'minifair.artifact.fetch_error',
+			'fair_beacon.artifact.fetch_error',
 			sprintf( __( 'Error fetching artifact: %s', 'mini-fair' ), $res['response']['code'] ),
 			[ 'status' => $res['response']['code'] ]
 		);
@@ -190,7 +190,7 @@ function generate_artifact_metadata( DID $did, string $url, $force_regenerate = 
 		'signature' => sign_artifact_data( $signing_key, $res['body'] ),
 	];
 
-	update_option( 'minifair_artifact_' . $artifact_id, $next_metadata );
+	update_option( 'fair_beacon_artifact_' . $artifact_id, $next_metadata );
 	return $next_metadata;
 }
 

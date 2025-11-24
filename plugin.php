@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Mini FAIR
+ * Plugin Name: FAIR Beacon
  * Description: Create your own FAIR node.
  * Version: 0.1
  * Author: FAIR Contributors
@@ -10,7 +10,7 @@
  * Text Domain: mini-fair
  */
 
-namespace MiniFAIR;
+namespace FAIR\Beacon;
 
 require __DIR__ . '/inc/namespace.php';
 require __DIR__ . '/inc/admin/namespace.php';

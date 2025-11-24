@@ -2,10 +2,10 @@
 /**
  * Release Document.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\API;
+namespace FAIR\Beacon\API;
 
 use JsonSerializable;
 

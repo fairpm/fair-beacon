@@ -2,10 +2,10 @@
 /**
  * PLC namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use CBOR\OtherObject\NullObject;
 use CBOR\{
@@ -13,9 +13,9 @@ use CBOR\{
 	MapItem,
 	TextStringObject,
 };
-use MiniFAIR\Admin;
-use MiniFAIR\Keys;
-use MiniFAIR\Keys\Key;
+use FAIR\Beacon\Admin;
+use FAIR\Beacon\Keys;
+use FAIR\Beacon\Keys\Key;
 use WP_CLI;
 use YOCLIB\Multiformats\Multibase\Multibase;
 

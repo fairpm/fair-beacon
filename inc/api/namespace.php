@@ -2,19 +2,19 @@
 /**
  * The API namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\API;
+namespace FAIR\Beacon\API;
 
-use MiniFAIR;
-use MiniFAIR\PLC\DID;
+use FAIR\Beacon;
+use FAIR\Beacon\PLC\DID;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
 use WP_REST_Server;
 
-const REST_NAMESPACE = 'minifair/v1';
+const REST_NAMESPACE = 'fair_beacon/v1';
 
 /**
  * Bootstrap.
@@ -43,7 +43,7 @@ function register_routes() : void {
 				'validation_callback' => function ( $param, $request, $key ) {
 					if ( ! preg_match( '/^did:plc:[\w-]+$/', $param ) ) {
 						return new WP_Error(
-							'minifair.get_package.invalid_id',
+							'fair_beacon.get_package.invalid_id',
 							__( 'Invalid package ID.', 'mini-fair' ),
 							[ 'status' => WP_Http::BAD_REQUEST ]
 						);
@@ -76,7 +76,7 @@ function get_package_data( WP_REST_Request $request ) {
 	if ( ! str_starts_with( $id, 'did:plc:' ) ) {
 		// todo, implement did:web.
 		return new WP_Error(
-			'minifair.get_package.invalid_id',
+			'fair_beacon.get_package.invalid_id',
 			"Can't manage non-PLC package",
 			[ 'status' => WP_Http::INTERNAL_SERVER_ERROR ]
 		);
@@ -85,13 +85,13 @@ function get_package_data( WP_REST_Request $request ) {
 	$did = DID::get( $id );
 	if ( empty( $did ) ) {
 		return new WP_Error(
-			'minifair.get_package.not_found',
+			'fair_beacon.get_package.not_found',
 			__( 'Package not found.', 'mini-fair' ),
 			[ 'status' => WP_Http::NOT_FOUND ]
 		);
 	}
 
-	foreach ( MiniFAIR\get_providers() as $provider ) {
+	foreach ( FAIR\Beacon\get_providers() as $provider ) {
 		if ( ! $provider->is_authoritative( $did ) ) {
 			continue;
 		}
@@ -103,13 +103,13 @@ function get_package_data( WP_REST_Request $request ) {
 
 	if ( empty( $response ) ) {
 		return new WP_Error(
-			'minifair.get_package.not_found',
+			'fair_beacon.get_package.not_found',
 			__( 'Package not found.', 'mini-fair' ),
 			[ 'status' => WP_Http::NOT_FOUND ]
 		);
 	}
 
-	set_transient( 'fair-metadata-endpoint-' . $id, $response, MiniFAIR\CACHE_LIFETIME );
+	set_transient( 'fair-metadata-endpoint-' . $id, $response, FAIR\Beacon\CACHE_LIFETIME );
 
 	return $response;
 }
@@ -120,7 +120,7 @@ function get_package_data( WP_REST_Request $request ) {
  * @return array
  */
 function get_packages() {
-	return array_filter( MiniFAIR\get_available_packages(),
+	return array_filter( FAIR\Beacon\get_available_packages(),
 		function ( $package_did ) {
 			return null !== DID::get( $package_did );
 		}

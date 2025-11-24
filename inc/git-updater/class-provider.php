@@ -2,15 +2,15 @@
 /**
  * Git Updater provider.
  *
- * @package MiniFAIR.
+ * @package FAIR\Beacon.
  */
 
-namespace MiniFAIR\Git_Updater;
+namespace FAIR\Beacon\Git_Updater;
 
 use Fragen\Singleton;
-use MiniFAIR\API\MetadataDocument;
-use MiniFAIR\PLC\DID;
-use MiniFAIR\Provider as ProviderInterface;
+use FAIR\Beacon\API\MetadataDocument;
+use FAIR\Beacon\PLC\DID;
+use FAIR\Beacon\Provider as ProviderInterface;
 use stdClass;
 use WP_Error;
 use WP_Http;
@@ -50,7 +50,7 @@ class Provider implements ProviderInterface {
 		foreach ( $gu_packages as $pkg ) {
 			if ( empty( $pkg->did ) ) {
 				$problems[ $pkg->file ] = new WP_Error(
-					'minifair.git_updater.missing_did',
+					'fair_beacon.git_updater.missing_did',
 					sprintf( __( 'Package %s is missing a DID. Specify it in the Plugin ID/Theme ID header.', 'mini-fair' ), $pkg->name ),
 					[ 'status' => WP_Http::NOT_FOUND ]
 				);
@@ -60,7 +60,7 @@ class Provider implements ProviderInterface {
 			$did = DID::get( $pkg->did );
 			if ( empty( $did ) ) {
 				$problems[ $pkg->file ] = new WP_Error(
-					'minifair.git_updater.invalid_did',
+					'fair_beacon.git_updater.invalid_did',
 					sprintf( __( "Package %s has a DID (%s), but the DID's keys are not registered on this site.", 'mini-fair' ), $pkg->name, $pkg->did ),
 					[ 'status' => WP_Http::NOT_FOUND ]
 				);
@@ -107,7 +107,7 @@ class Provider implements ProviderInterface {
 		$package = $this->get_package( $did->id );
 		if ( ! $package ) {
 			return new WP_Error(
-				'minifair.get_package.not_found',
+				'fair_beacon.get_package.not_found',
 				__( 'Package not found.', 'mini-fair' ),
 				[ 'status' => WP_Http::NOT_FOUND ]
 			);
@@ -250,7 +250,7 @@ class Provider implements ProviderInterface {
 		$package = $this->get_package( $did->id );
 		if ( ! $package ) {
 			return new WP_Error(
-				'minifair.get_package.not_found',
+				'fair_beacon.get_package.not_found',
 				__( 'Package not found.', 'mini-fair' ),
 				[ 'status' => WP_Http::NOT_FOUND ]
 			);
@@ -308,7 +308,7 @@ class Provider implements ProviderInterface {
 		}
 
 		$err = new WP_Error(
-			'minifair.update_fair_data.error',
+			'fair_beacon.update_fair_data.error',
 			__( 'Error updating FAIR data for repository.', 'mini-fair' )
 		);
 		foreach ( $errors as $error ) {

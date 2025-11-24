@@ -2,15 +2,15 @@
 /**
  * Operation.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use Exception;
 use JsonSerializable;
-use MiniFAIR\Keys;
-use MiniFAIR\Keys\Key;
+use FAIR\Beacon\Keys;
+use FAIR\Beacon\Keys\Key;
 
 /**
  * Operation class.

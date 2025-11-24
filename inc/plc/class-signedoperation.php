@@ -2,10 +2,10 @@
 /**
  * Signed operation.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use Exception;
 use JsonSerializable;

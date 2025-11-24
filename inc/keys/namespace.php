@@ -2,10 +2,10 @@
 /**
  * Key namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Keys;
+namespace FAIR\Beacon\Keys;
 
 use Exception;
 use YOCLIB\Multiformats\Multibase\Multibase;

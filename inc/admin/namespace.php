@@ -2,15 +2,15 @@
 /**
  * The administration namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Admin;
+namespace FAIR\Beacon\Admin;
 
 use Exception;
-use MiniFAIR;
-use MiniFAIR\Keys;
-use MiniFAIR\PLC\DID;
+use FAIR\Beacon;
+use FAIR\Beacon\Keys;
+use FAIR\Beacon\PLC\DID;
 use WP_Post;
 
 const ACTION_CREATE = 'create';
@@ -18,8 +18,8 @@ const ACTION_KEY_ADD = 'key_add';
 const ACTION_KEY_REVOKE = 'key_revoke';
 const ACTION_RESIGN = 'resign';
 const ACTION_SYNC = 'sync';
-const NONCE_PREFIX = 'minifair_';
-const PAGE_SLUG = 'minifair';
+const NONCE_PREFIX = 'fair_beacon_';
+const PAGE_SLUG = 'fair_beacon';
 
 /**
  * Bootstrap
@@ -57,8 +57,8 @@ function bootstrap() {
 function add_admin_menu() {
 	// add top level page.
 	$hook = add_menu_page(
-		__( 'Mini FAIR', 'mini-fair' ),
-		__( 'Mini FAIR', 'mini-fair' ),
+		__( 'FAIR Beacon', 'mini-fair' ),
+		__( 'FAIR Beacon', 'mini-fair' ),
 		'manage_options',
 		PAGE_SLUG,
 		__NAMESPACE__ . '\\render_settings_page'
@@ -85,8 +85,8 @@ function render_settings_page() {
 		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
 	}
 
-	$providers = MiniFAIR\get_providers();
-	$packages = MiniFAIR\get_available_packages();
+	$providers = FAIR\Beacon\get_providers();
+	$packages = FAIR\Beacon\get_available_packages();
 
 	$invalid = [];
 	foreach ( $providers as $provider ) {
@@ -94,13 +94,13 @@ function render_settings_page() {
 	}
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Mini FAIR', 'mini-fair' ); ?></h1>
+		<h1><?php esc_html_e( 'FAIR Beacon', 'mini-fair' ); ?></h1>
 
 		<p>
 		<?php
 			printf(
-				__( 'Mini FAIR is active on your site. View your active packages at <a href="%1$s"><code>%1$s</code></a>', 'mini-fair' ),
-				esc_url( rest_url( '/minifair/v1/packages' ) )
+				__( 'FAIR Beacon is active on your site. View your active packages at <a href="%1$s"><code>%1$s</code></a>', 'mini-fair' ),
+				esc_url( rest_url( '/fair_beacon/v1/packages' ) )
 			);
 		?>
 		</p>
@@ -122,7 +122,7 @@ function render_settings_page() {
 						if ( ! $did ) {
 							continue;
 						}
-						$data = MiniFAIR\get_package_metadata( $did );
+						$data = FAIR\Beacon\get_package_metadata( $did );
 						$security_contact = array_reduce(
 							$data->security,
 							fn ( $all, $current ) => array_merge( $all, array_values( $current ) ),
@@ -372,7 +372,7 @@ function on_resign( DID $did ) {
 	}
 
 	try {
-		MiniFAIR\update_metadata( $did, true );
+		FAIR\Beacon\update_metadata( $did, true );
 		wp_redirect( get_edit_post_link( $did->get_internal_post_id(), 'raw' ) );
 		exit;
 	} catch ( \Exception $e ) {

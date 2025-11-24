@@ -2,14 +2,14 @@
 /**
  * CID Tag.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
 // phpcs:disable HM.Files.NamespaceDirectoryName.NameMismatch -- Avoids a bug which detects strict_types as the namespace.
 
 declare(strict_types=1);
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use CBOR\ByteStringObject;
 use CBOR\CBORObject;

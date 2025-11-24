@@ -1,9 +1,9 @@
-# Mini FAIR Repo
-The Mini FAIR plugin transforms your site into a [FAIR Repository](https://github.com/fairpm/fair-protocol), allowing you to serve packages directly from your own infrastructure into the FAIR system.
+# FAIR Beacon Repo
+The FAIR Beacon plugin transforms your site into a [FAIR Repository](https://github.com/fairpm/fair-protocol), allowing you to serve packages directly from your own infrastructure into the FAIR system.
 ## Design Goals
-Mini FAIR is designed to allow plugin and theme vendors to host their own FAIR repository easily, integrating with tools they’re already using. Mini FAIR is built for small scale hosting for a few packages, not for general use as a mass-hosting repository.
+FAIR Beacon is designed to allow plugin and theme vendors to host their own FAIR repository easily, integrating with tools they’re already using. FAIR Beacon is built for small scale hosting for a few packages, not for general use as a mass-hosting repository.
 
-We aim to make it possible for everyone to run Mini FAIR, with a focus on ease of use and integration with existing tooling.
+We aim to make it possible for everyone to run FAIR Beacon, with a focus on ease of use and integration with existing tooling.
 ## Requirements
 - PHP 8.3 or higher
 - WordPress 6.4 or higher
@@ -13,8 +13,8 @@ We aim to make it possible for everyone to run Mini FAIR, with a focus on ease o
 ## Local Installation & Development Setup
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/fairpm/mini-fair-repo.git
-cd mini-fair-repo
+git clone https://github.com/fairpm/fair-beacon.git
+cd fair-beacon
 ```
 ### 2. Install Dependencies
 Install PHP dependencies using Composer:
@@ -32,9 +32,9 @@ This will install the required packages:
    - [XAMPP](https://www.apachefriends.org/)
    - [MAMP](https://www.mamp.info/)
    - [Docker](https://github.com/docker/awesome-compose/tree/master/wordpress-mysql)
-2. Copy the Mini FAIR plugin to your WordPress plugins directory:
+2. Copy the FAIR Beacon plugin to your WordPress plugins directory:
    ```bash
-   cp -r /path/to/mini-fair-repo /path/to/wordpress/wp-content/plugins/mini-fair
+   cp -r /path/to/fair-beacon /path/to/wordpress/wp-content/plugins/mini-fair
    ```
 3. Activate the plugin through the WordPress admin interface or via WP-CLI:
    ```bash
@@ -45,15 +45,15 @@ If you have WP-CLI installed, you can quickly set up a development environment:
 ```bash
 # Create a new WordPress installation
 wp core download
-wp config create --dbname=minifair_dev --dbuser=root --dbpass=password
-wp core install --url=http://localhost --title=“Mini FAIR Dev” --admin_user=admin --admin_password=password --admin_email=admin@example.com
+wp config create --dbname=fair_beacon_dev --dbuser=root --dbpass=password
+wp core install --url=http://localhost --title=“FAIR Beacon Dev” --admin_user=admin --admin_password=password --admin_email=admin@example.com
 # Create a symlink to the plugin
-ln -s /path/to/mini-fair-repo wp-content/plugins/mini-fair
+ln -s /path/to/fair-beacon wp-content/plugins/mini-fair
 # Activate the plugin
 wp plugin activate mini-fair
 ```
 ### 4. Install Git Updater
-Mini FAIR requires Git Updater for package management:
+FAIR Beacon requires Git Updater for package management:
 ```bash
 # Download and install Git Updater
 wp plugin install https://github.com/afragen/git-updater/archive/refs/heads/master.zip --activate
@@ -68,7 +68,7 @@ define(‘WP_DEBUG_DISPLAY’, false);
 define(‘SCRIPT_DEBUG’, true);
 ```
 #### Enable WP-CLI Commands
-Mini FAIR includes WP-CLI commands for PLC management. Ensure WP-CLI is installed and available in your development environment.
+FAIR Beacon includes WP-CLI commands for PLC management. Ensure WP-CLI is installed and available in your development environment.
 ### 6. Verify Installation
 1. Check that the plugin is active:
    ```bash
@@ -76,14 +76,14 @@ Mini FAIR includes WP-CLI commands for PLC management. Ensure WP-CLI is installe
    ```
 2. Verify the REST API endpoint is working:
    ```bash
-   curl http://your-site.local/wp-json/minifair/v1/packages
+   curl http://your-site.local/wp-json/fair_beacon/v1/packages
    ```
-3. Access the Mini FAIR admin page at:
-   `http://your-site.local/wp-admin/admin.php?page=minifair`
+3. Access the FAIR Beacon admin page at:
+   `http://your-site.local/wp-admin/admin.php?page=fair_beacon`
 ## Development Workflow
 ### Project Structure
 ```
-mini-fair-repo/
+fair-beacon/
 ├── plugin.php              # Main plugin file
 ├── composer.json           # PHP dependencies
 ├── inc/                    # Core functionality
@@ -98,7 +98,7 @@ mini-fair-repo/
 ### Key Components
 - **PLC Integration**: Handles Decentralized Identifiers (DIDs) for packages
 - **Git Updater Provider**: Integrates with Git Updater for package management
-- **REST API**: Provides endpoints for package metadata (`/wp-json/minifair/v1/packages/{did}`)
+- **REST API**: Provides endpoints for package metadata (`/wp-json/fair_beacon/v1/packages/{did}`)
 - **Admin Interface**: WordPress dashboard integration for managing DIDs and packages
 ### Making Changes
 1. **PHP Code**: Edit files in the `inc/` directory
@@ -111,12 +111,12 @@ mini-fair-repo/
 - Check WordPress debug logs in `wp-content/debug.log`
 - Use `error_log()` for debugging output
 - Monitor the REST API responses for package metadata
-## Using Mini FAIR
+## Using FAIR Beacon
 ### Installation for End Users
-Mini FAIR currently supports integration with [Git Updater](https://git-updater.com/), with planned support for other tools such as EDD coming soon.
-To use Mini FAIR, install the latest version of plugin as well as a supported tool - that is, Git Updater.
+FAIR Beacon currently supports integration with [Git Updater](https://git-updater.com/), with planned support for other tools such as EDD coming soon.
+To use FAIR Beacon, install the latest version of plugin as well as a supported tool - that is, Git Updater.
 ### Creating a DID for your package
-Once you’ve got Mini FAIR installed, you’ll need to create a DID for your package if you don’t already have one. Head to the Mini FAIR page in your WordPress dashboard, and click “Create New PLC DID…”
+Once you’ve got FAIR Beacon installed, you’ll need to create a DID for your package if you don’t already have one. Head to the FAIR Beacon page in your WordPress dashboard, and click “Create New PLC DID…”
 This will begin the process of creating a new PLC DID for your package - a globally-unique ID identifying your package, which you can take with you even if you change repositories in the future.
 It will also create two cryptographic keys: a “rotation” key, used to manage the DID’s details, as well as a “verification key”, which is used to sign releases. These keys will be stored in your WordPress database - **don’t lose them, as you can’t recover your DID if you lose your rotation key!**
 Once your DID has been created, it’ll be published [in the global PLC Directory](https://web.plc.directory/resolve) if you want to double check it. You can also sync changes to the directory via the Dashboard if your site’s URL changes, or (coming soon!) to rotate your keys.
@@ -139,7 +139,7 @@ Theme URI: Https://...
 ```
 Ensure your plugin or theme is set up correctly with [Git Updater](https://git-updater.com/knowledge-base/), and that you’re using the same site as you registered your DID with.
 Once that’s done, you’re ready to go - your package should integrate automatically with the FAIR system! You can use the [FAIR Plugin](https://github.com/fairpm/fair-plugin) to install your package directly by ID, and once it’s been installed once, discovery aggregators will start to list it.
-You can double-check your packages by checking the REST API endpoint at `/wp-json/minifair/v1/packages/{did}` (replace `{did}` with your package’s DID).
+You can double-check your packages by checking the REST API endpoint at `/wp-json/fair_beacon/v1/packages/{did}` (replace `{did}` with your package’s DID).
 ## Contributing
 We welcome contributions! Please see [the TSC repository](https://github.com/fairpm/tsc) for contribution guidelines, including the code of conduct.
 ### Development Setup for Contributors
