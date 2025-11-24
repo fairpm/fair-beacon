@@ -92,6 +92,14 @@ function render_settings_page() {
 	foreach ( $providers as $provider ) {
 		$invalid = array_merge( $invalid, $provider->get_invalid() );
 	}
+	$missing_dids = [];
+	foreach ( $invalid as $id => $error ) {
+		$error_code = $error->get_error_code();
+		if ( 'fair_beacon.git_updater.missing_did' === $error_code ) {
+			$missing_dids[ $id ] = $error;
+		}
+	}
+
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'FAIR Beacon', 'fair-beacon' ); ?></h1>
@@ -138,7 +146,7 @@ function render_settings_page() {
 				<?php endforeach; ?>
 		</table>
 
-		<?php if ( ! empty( $invalid ) ) : ?>
+		<?php if ( ! empty( $missing_dids ) ) : ?>
 			<h2><?php esc_html_e( 'Invalid Packages', 'fair-beacon' ); ?></h2>
 			<table class="wp-list-table widefat fixed striped">
 				<thead>
@@ -148,7 +156,7 @@ function render_settings_page() {
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ( $invalid as $id => $error ) : ?>
+					<?php foreach ( $missing_dids as $id => $error ) : ?>
 						<tr>
 							<td><code><?php echo esc_html( $id ); ?></code></td>
 							<td><?php echo esc_html( $error->get_error_message() ); ?></td>
