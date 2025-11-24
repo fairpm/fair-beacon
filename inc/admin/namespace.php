@@ -19,7 +19,7 @@ const ACTION_KEY_REVOKE = 'key_revoke';
 const ACTION_RESIGN = 'resign';
 const ACTION_SYNC = 'sync';
 const NONCE_PREFIX = 'fair_beacon_';
-const PAGE_SLUG = 'fair_beacon';
+const PAGE_SLUG = 'fair-beacon';
 
 /**
  * Bootstrap
