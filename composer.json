@@ -1,5 +1,5 @@
 {
-    "name": "fairpm/mini-fair-repo",
+    "name": "fairpm/fair-beacon",
     "description": "Transform your WP site into a FAIR Package Management Repository",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
@@ -9,10 +9,10 @@
             "name": "FAIR Contributors"
         }
     ],
-    "homepage": "https://github.com/fairpm/mini-fair-repo",
+    "homepage": "https://github.com/fairpm/fair-beacon",
     "support": {
-        "issues": "https://github.com/fairpm/mini-fair-repo/issues",
-        "source": "https://github.com/fairpm/mini-fair-repo"
+        "issues": "https://github.com/fairpm/fair-beacon/issues",
+        "source": "https://github.com/fairpm/fair-beacon"
     },
     "require": {
         "php": ">=8.3",

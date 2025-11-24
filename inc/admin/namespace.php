@@ -2,15 +2,15 @@
 /**
  * The administration namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\Admin;
+namespace FAIR\Beacon\Admin;
 
 use Exception;
-use MiniFAIR;
-use MiniFAIR\Keys;
-use MiniFAIR\PLC\DID;
+use FAIR\Beacon;
+use FAIR\Beacon\Keys;
+use FAIR\Beacon\PLC\DID;
 use WP_Post;
 
 const ACTION_CREATE = 'create';
@@ -18,8 +18,8 @@ const ACTION_KEY_ADD = 'key_add';
 const ACTION_KEY_REVOKE = 'key_revoke';
 const ACTION_RESIGN = 'resign';
 const ACTION_SYNC = 'sync';
-const NONCE_PREFIX = 'minifair_';
-const PAGE_SLUG = 'minifair';
+const NONCE_PREFIX = 'fair_beacon_';
+const PAGE_SLUG = 'fair-beacon';
 
 /**
  * Bootstrap
@@ -57,8 +57,8 @@ function bootstrap() {
 function add_admin_menu() {
 	// add top level page.
 	$hook = add_menu_page(
-		__( 'Mini FAIR', 'mini-fair' ),
-		__( 'Mini FAIR', 'mini-fair' ),
+		__( 'FAIR Beacon', 'fair-beacon' ),
+		__( 'FAIR Beacon', 'fair-beacon' ),
 		'manage_options',
 		PAGE_SLUG,
 		__NAMESPACE__ . '\\render_settings_page'
@@ -82,11 +82,11 @@ function load_settings_page() {
 function render_settings_page() {
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
-	$providers = MiniFAIR\get_providers();
-	$packages = MiniFAIR\get_available_packages();
+	$providers = Beacon\get_providers();
+	$packages = Beacon\get_available_packages();
 
 	$invalid = [];
 	foreach ( $providers as $provider ) {
@@ -102,24 +102,24 @@ function render_settings_page() {
 
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Mini FAIR', 'mini-fair' ); ?></h1>
+		<h1><?php esc_html_e( 'FAIR Beacon', 'fair-beacon' ); ?></h1>
 
 		<p>
 		<?php
 			printf(
-				__( 'Mini FAIR is active on your site. View your active packages at <a href="%1$s"><code>%1$s</code></a>', 'mini-fair' ),
-				esc_url( rest_url( '/minifair/v1/packages' ) )
+				__( 'FAIR Beacon is active on your site. View your active packages at <a href="%1$s"><code>%1$s</code></a>', 'fair-beacon' ),
+				esc_url( rest_url( '/fair-beacon/v1/packages' ) )
 			);
 		?>
 		</p>
 
-		<h2><?php esc_html_e( 'Active Packages', 'mini-fair' ); ?></h2>
+		<h2><?php esc_html_e( 'Active Packages', 'fair-beacon' ); ?></h2>
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
 				<tr>
-					<th scope="col"><?php esc_html_e( 'Package ID', 'mini-fair' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Name', 'mini-fair' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Security Contact', 'mini-fair' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Package ID', 'fair-beacon' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Name', 'fair-beacon' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Security Contact', 'fair-beacon' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -130,16 +130,16 @@ function render_settings_page() {
 						if ( ! $did ) {
 							continue;
 						}
-						$data = MiniFAIR\get_package_metadata( $did );
+						$data = Beacon\get_package_metadata( $did );
 						$security_contact = array_reduce(
 							$data->security,
 							fn ( $all, $current ) => array_merge( $all, array_values( $current ) ),
 							[]
 						);
-						$security_contact = implode( ', ', $security_contact ) ?: __( 'Not specified', 'mini-fair' );
+						$security_contact = implode( ', ', $security_contact ) ?: __( 'Not specified', 'fair-beacon' );
 						?>
 						<td><code><?php echo esc_html( $package_id ); ?></code>
-							<a href="<?php echo esc_url( get_edit_post_link( $did->get_internal_post_id() ) ) ?>"><?php esc_html_e( '(View DID)', 'mini-fair' ) ?></a></td>
+							<a href="<?php echo esc_url( get_edit_post_link( $did->get_internal_post_id() ) ) ?>"><?php esc_html_e( '(View DID)', 'fair-beacon' ) ?></a></td>
 						<td><?php echo esc_html( $data->name ); ?></td>
 						<td><?php echo esc_html( $security_contact ); ?></td>
 					</tr>
@@ -147,12 +147,12 @@ function render_settings_page() {
 		</table>
 
 		<?php if ( ! empty( $missing_dids ) ) : ?>
-			<h2><?php esc_html_e( 'Invalid Packages', 'mini-fair' ); ?></h2>
+			<h2><?php esc_html_e( 'Invalid Packages', 'fair-beacon' ); ?></h2>
 			<table class="wp-list-table widefat fixed striped">
 				<thead>
 					<tr>
-						<th scope="col"><?php esc_html_e( 'Package ID', 'mini-fair' ); ?></th>
-						<th scope="col"><?php esc_html_e( 'Error', 'mini-fair' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Package ID', 'fair-beacon' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'Error', 'fair-beacon' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -166,11 +166,11 @@ function render_settings_page() {
 			</table>
 		<?php endif; ?>
 
-		<h2><?php esc_html_e( 'Publish a New Package', 'mini-fair' ); ?></h2>
-		<p><?php esc_html_e( 'The first step in publishing a new package is to create a DID for it. This will act as the permanent, globally-unique ID for your package.', 'mini-fair' ); ?></p>
+		<h2><?php esc_html_e( 'Publish a New Package', 'fair-beacon' ); ?></h2>
+		<p><?php esc_html_e( 'The first step in publishing a new package is to create a DID for it. This will act as the permanent, globally-unique ID for your package.', 'fair-beacon' ); ?></p>
 		<p>
 			<a href="<?php echo admin_url( 'post-new.php?post_type=' . DID::POST_TYPE ); ?>" class="button button-primary">
-				<?php esc_html_e( 'Create New PLC DID…', 'mini-fair' ); ?>
+				<?php esc_html_e( 'Create New PLC DID…', 'fair-beacon' ); ?>
 			</a>
 		</p>
 	</div>
@@ -211,7 +211,7 @@ function render_editor() {
 
 	require_once ABSPATH . 'wp-admin/admin-header.php';
 
-	$title = $GLOBALS['title'] ?? __( 'Create New PLC DID', 'mini-fair' );
+	$title = $GLOBALS['title'] ?? __( 'Create New PLC DID', 'fair-beacon' );
 
 	echo '<div class="wrap">';
 	echo '<h1 class="wp-heading-inline">';
@@ -239,7 +239,7 @@ function on_create() {
 
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	// Handle the form submission to create a new PLC DID.
@@ -247,7 +247,7 @@ function on_create() {
 	if ( is_wp_error( $did ) ) {
 		wp_admin_notice(
 			sprintf(
-				__( 'Could not create DID: %s', 'mini-fair' ),
+				__( 'Could not create DID: %s', 'fair-beacon' ),
 				$did->get_error_message()
 			),
 			[
@@ -270,12 +270,12 @@ function on_create() {
 function render_new_page( WP_Post $post ) {
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	?>
-	<p><?php esc_html_e( "PLC DIDs are used as your globally-unique package identifier. You can create one here if you're publishing a new package.", 'mini-fair' ) ?></p>
-	<p><?php esc_html_e( 'PLC DIDs are permanent, and publicly available in the PLC directory.', 'mini-fair' ) ?></p>
+	<p><?php esc_html_e( "PLC DIDs are used as your globally-unique package identifier. You can create one here if you're publishing a new package.", 'fair-beacon' ) ?></p>
+	<p><?php esc_html_e( 'PLC DIDs are permanent, and publicly available in the PLC directory.', 'fair-beacon' ) ?></p>
 
 	<form action="" method="post">
 		<?php wp_nonce_field( NONCE_PREFIX . ACTION_CREATE ) ?>
@@ -285,16 +285,16 @@ function render_new_page( WP_Post $post ) {
 		<table class="form-table">
 			<!-- <tr>
 				<th scope="row">
-					<label for="recovery"><?php esc_html_e( 'Recovery Key', 'mini-fair' ); ?></label>
+					<label for="recovery"><?php esc_html_e( 'Recovery Key', 'fair-beacon' ); ?></label>
 				</th>
 				<td>
 					<input type="text" id="recovery" name="recovery" class="regular-text" />
-					<p class="description"><?php esc_html_e( 'If you have an existing recovery public key, enter it here.', 'mini-fair' ); ?></p>
+					<p class="description"><?php esc_html_e( 'If you have an existing recovery public key, enter it here.', 'fair-beacon' ); ?></p>
 				</td>
 			</tr> -->
 			<tr>
 				<td colspan="2">
-					<?php submit_button( __( 'Create PLC DID', 'mini-fair' ), 'primary', 'create_did' ); ?>
+					<?php submit_button( __( 'Create PLC DID', 'fair-beacon' ), 'primary', 'create_did' ); ?>
 				</td>
 			</tr>
 		</table>
@@ -318,7 +318,7 @@ function handle_action( int $post_id ) {
 	$action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ?? '' ) );
 	if ( empty( $action ) ) {
 		// This should never occur, since we're hooked into specific actions above.
-		wp_die( __( 'No action specified.', 'mini-fair' ), '', [ 'response' => 400 ] );
+		wp_die( __( 'No action specified.', 'fair-beacon' ), '', [ 'response' => 400 ] );
 	}
 
 	check_admin_referer( NONCE_PREFIX . $action );
@@ -338,7 +338,7 @@ function handle_action( int $post_id ) {
 			on_sync( $did );
 			break;
 		default:
-			wp_die( __( 'Invalid action.', 'mini-fair' ), '', [ 'response' => 400 ] );
+			wp_die( __( 'Invalid action.', 'fair-beacon' ), '', [ 'response' => 400 ] );
 	}
 }
 
@@ -353,7 +353,7 @@ function on_sync( DID $did ) {
 
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	try {
@@ -361,7 +361,7 @@ function on_sync( DID $did ) {
 		wp_redirect( get_edit_post_link( $did->get_internal_post_id(), 'raw' ) );
 		exit;
 	} catch ( \Exception $e ) {
-		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'mini-fair' ), [ 'response' => 500 ] );
+		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'fair-beacon' ), [ 'response' => 500 ] );
 	}
 }
 
@@ -376,15 +376,15 @@ function on_resign( DID $did ) {
 
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	try {
-		MiniFAIR\update_metadata( $did, true );
+		Beacon\update_metadata( $did, true );
 		wp_redirect( get_edit_post_link( $did->get_internal_post_id(), 'raw' ) );
 		exit;
 	} catch ( \Exception $e ) {
-		wp_die( esc_html( $e->getMessage() ), __( 'Error Regenerating Signatures', 'mini-fair' ), [ 'response' => 500 ] );
+		wp_die( esc_html( $e->getMessage() ), __( 'Error Regenerating Signatures', 'fair-beacon' ), [ 'response' => 500 ] );
 	}
 }
 
@@ -397,7 +397,7 @@ function on_resign( DID $did ) {
 function on_add_key( DID $did ) {
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	// Handle adding a new verification key.
@@ -410,7 +410,7 @@ function on_add_key( DID $did ) {
 		exit;
 	} catch ( \Exception $e ) {
 		var_dump( $e );
-		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'mini-fair' ), [ 'response' => 500 ] );
+		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'fair-beacon' ), [ 'response' => 500 ] );
 	}
 }
 
@@ -422,24 +422,24 @@ function on_add_key( DID $did ) {
 function on_revoke_key( DID $did ) {
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	// phpcs:ignore HM.Security.NonceVerification.Missing -- Nonce verification has already been performed.
 	$key_id = sanitize_text_field( wp_unslash( $_POST['key_id'] ?? '' ) );
 	if ( empty( $key_id ) ) {
-		wp_die( __( 'No key ID specified.', 'mini-fair' ), '', [ 'response' => 400 ] );
+		wp_die( __( 'No key ID specified.', 'fair-beacon' ), '', [ 'response' => 400 ] );
 	}
 
 	// Find corresponding private key.
 	$keys = $did->get_verification_keys();
 	$key = array_find( $keys, fn ( $k ) => $k->encode_public() === $key_id );
 	if ( empty( $key ) ) {
-		wp_die( __( 'Invalid key ID.', 'mini-fair' ), '', [ 'response' => 400 ] );
+		wp_die( __( 'Invalid key ID.', 'fair-beacon' ), '', [ 'response' => 400 ] );
 	}
 
 	if ( ! $did->invalidate_verification_key( $key ) ) {
-		wp_die( __( 'Failed to revoke key.', 'mini-fair' ), '', [ 'response' => 500 ] );
+		wp_die( __( 'Failed to revoke key.', 'fair-beacon' ), '', [ 'response' => 500 ] );
 	}
 
 	try {
@@ -449,7 +449,7 @@ function on_revoke_key( DID $did ) {
 		exit;
 	} catch ( Exception $e ) {
 		var_dump( $e );
-		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'mini-fair' ), [ 'response' => 500 ] );
+		wp_die( esc_html( $e->getMessage() ), __( 'Error Syncing PLC DID', 'fair-beacon' ), [ 'response' => 500 ] );
 	}
 }
 
@@ -462,27 +462,27 @@ function on_revoke_key( DID $did ) {
 function render_edit_page( WP_Post $post ) {
 	// Check user permissions.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'mini-fair' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'fair-beacon' ) );
 	}
 
 	$did = DID::from_post( $post );
 	$remote = fetch_did( $did );
 	?>
-	<p><?php esc_html_e( 'PLC DIDs are used as your globally-unique package identifier.', 'mini-fair' ) ?></p>
+	<p><?php esc_html_e( 'PLC DIDs are used as your globally-unique package identifier.', 'fair-beacon' ) ?></p>
 
 	<table class="form-table">
 		<tr>
 			<th scope="row">
-				<?php esc_html_e( 'DID', 'mini-fair' ); ?>
+				<?php esc_html_e( 'DID', 'fair-beacon' ); ?>
 			</th>
 			<td>
 				<code><?php echo esc_html( $did->id ); ?></code>
-				<p class="description"><?php esc_html_e( 'PLC DIDs are permanent, and publicly available in the PLC directory.', 'mini-fair' ); ?></p>
+				<p class="description"><?php esc_html_e( 'PLC DIDs are permanent, and publicly available in the PLC directory.', 'fair-beacon' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<?php esc_html_e( 'Rotation Public Keys', 'mini-fair' ); ?>
+				<?php esc_html_e( 'Rotation Public Keys', 'fair-beacon' ); ?>
 			</th>
 			<td>
 				<ol>
@@ -490,15 +490,15 @@ function render_edit_page( WP_Post $post ) {
 						<li><code><?php echo esc_html( $key->encode_public() ); ?></code></li>
 					<?php endforeach; ?>
 				</ol>
-				<p class="description"><?php esc_html_e( 'Rotation keys are used to manage the DID itself.', 'mini-fair' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Rotation keys are used to manage the DID itself.', 'fair-beacon' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="recovery"><?php esc_html_e( 'Verification Public Keys', 'mini-fair' ); ?></label>
+				<label for="recovery"><?php esc_html_e( 'Verification Public Keys', 'fair-beacon' ); ?></label>
 			</th>
 			<td>
-				<p class="description"><?php esc_html_e( 'Verification keys are used for package signing. Your newest (last) key is used for signing, but older keys are still used for verification. Revoking any key will invalidate any older packages which may be cached, so should only be done after some time (such as a week) has passed.', 'mini-fair' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Verification keys are used for package signing. Your newest (last) key is used for signing, but older keys are still used for verification. Revoking any key will invalidate any older packages which may be cached, so should only be done after some time (such as a week) has passed.', 'fair-beacon' ); ?></p>
 				<ol>
 					<?php
 					$verification_keys = $did->get_verification_keys();
@@ -528,12 +528,12 @@ function render_edit_page( WP_Post $post ) {
 								$disabled = count( $verification_keys ) === 1
 									? [
 										'disabled' => 'disabled',
-										'title' => __( 'You must have at least one verification key.', 'mini-fair' ),
+										'title' => __( 'You must have at least one verification key.', 'fair-beacon' ),
 									]
 									: [];
 
 								submit_button(
-									__( 'Revoke', 'mini-fair' ),
+									__( 'Revoke', 'fair-beacon' ),
 									'',
 									'revoke_verification_key',
 									true,
@@ -548,20 +548,20 @@ function render_edit_page( WP_Post $post ) {
 					<?php wp_nonce_field( NONCE_PREFIX . ACTION_KEY_ADD ); ?>
 					<input type="hidden" name="post" value="<?= esc_attr( $post->ID ); ?>" />
 					<input type="hidden" name="action" value="<?= esc_attr( ACTION_KEY_ADD ); ?>" />
-					<?php submit_button( __( 'Add new key', 'mini-fair' ), '', 'add_verification_key' ); ?>
+					<?php submit_button( __( 'Add new key', 'fair-beacon' ), '', 'add_verification_key' ); ?>
 				</form>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<?php esc_html_e( 'DID Document', 'mini-fair' ); ?>
+				<?php esc_html_e( 'DID Document', 'fair-beacon' ); ?>
 			</th>
 			<td>
 				<pre><?php echo esc_html( json_encode( $remote, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ); ?></pre>
 				<p class="description">
 					<?php
 					printf(
-						__( 'Current DID Document in the <a href="%s">PLC Directory</a>.', 'mini-fair' ),
+						__( 'Current DID Document in the <a href="%s">PLC Directory</a>.', 'fair-beacon' ),
 						esc_url( 'https://web.plc.directory/did/' . $did->id )
 					);
 					?>
@@ -570,12 +570,12 @@ function render_edit_page( WP_Post $post ) {
 		</tr>
 		<tr>
 			<th scope="row">
-				<?php esc_html_e( 'Sync to PLC Directory', 'mini-fair' ); ?>
+				<?php esc_html_e( 'Sync to PLC Directory', 'fair-beacon' ); ?>
 			</th>
 			<td>
-				<p><?php esc_html_e( 'If the service endpoint or keys have changed, you can resync to the PLC Directory.', 'mini-fair' ); ?></p>
+				<p><?php esc_html_e( 'If the service endpoint or keys have changed, you can resync to the PLC Directory.', 'fair-beacon' ); ?></p>
 				<details>
-					<summary><?php esc_html_e( 'Expected changes', 'mini-fair' ); ?></summary>
+					<summary><?php esc_html_e( 'Expected changes', 'fair-beacon' ); ?></summary>
 					<?php
 					$current = $remote;
 					unset( $current['@context'] );
@@ -584,7 +584,7 @@ function render_edit_page( WP_Post $post ) {
 						json_encode( $did->get_expected_document(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES )
 					);
 					if ( empty( $diff ) ) {
-						echo '<p class="description">' . esc_html__( 'No changes detected. The PLC Directory is already up to date.', 'mini-fair' ) . '</p>';
+						echo '<p class="description">' . esc_html__( 'No changes detected. The PLC Directory is already up to date.', 'fair-beacon' ) . '</p>';
 					} else {
 						echo '<div class="diff">' . wp_kses_post( $diff ) . '</div>';
 					}
@@ -594,21 +594,21 @@ function render_edit_page( WP_Post $post ) {
 					<?php wp_nonce_field( NONCE_PREFIX . ACTION_SYNC ); ?>
 					<input type="hidden" name="post" value="<?php echo esc_attr( $post->ID ); ?>" />
 					<input type="hidden" name="action" value="<?= esc_attr( ACTION_SYNC ); ?>" />
-					<?php submit_button( __( 'Sync to PLC Directory', 'mini-fair' ), 'primary', 'update_did' ); ?>
+					<?php submit_button( __( 'Sync to PLC Directory', 'fair-beacon' ), 'primary', 'update_did' ); ?>
 				</form>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<?php esc_html_e( 'Regenerate Signatures', 'mini-fair' ); ?>
+				<?php esc_html_e( 'Regenerate Signatures', 'fair-beacon' ); ?>
 			</th>
 			<td>
-				<p><?php esc_html_e( 'After generating a new key, regenerate artifact signatures to use the new key. Without regeneration, only new artifacts will use the new keys.', 'mini-fair' ) ?></p>
+				<p><?php esc_html_e( 'After generating a new key, regenerate artifact signatures to use the new key. Without regeneration, only new artifacts will use the new keys.', 'fair-beacon' ) ?></p>
 				<form action="" method="post">
 					<?php wp_nonce_field( NONCE_PREFIX . ACTION_RESIGN ); ?>
 					<input type="hidden" name="post" value="<?= esc_attr( $post->ID ); ?>" />
 					<input type="hidden" name="action" value="<?= esc_attr( ACTION_RESIGN ); ?>" />
-					<?php submit_button( __( 'Regenerate signatures', 'mini-fair' ), '', 'regenerate_signatures' ); ?>
+					<?php submit_button( __( 'Regenerate signatures', 'fair-beacon' ), '', 'regenerate_signatures' ); ?>
 				</form>
 			</td>
 		</tr>

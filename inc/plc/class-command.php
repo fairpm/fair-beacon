@@ -2,10 +2,10 @@
 /**
  * Command.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR\PLC;
+namespace FAIR\Beacon\PLC;
 
 use WP_CLI;
 use WP_CLI_Command;

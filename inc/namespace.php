@@ -2,14 +2,14 @@
 /**
  * Plugin namespace.
  *
- * @package MiniFAIR
+ * @package FAIR\Beacon
  */
 
-namespace MiniFAIR;
+namespace FAIR\Beacon;
 
-use MiniFAIR\PLC\DID;
+use FAIR\Beacon\PLC\DID;
 
-const CACHE_PREFIX = 'minifair-';
+const CACHE_PREFIX = 'fair_beacon-';
 const CACHE_LIFETIME = 12 * HOUR_IN_SECONDS;
 
 /**
@@ -35,7 +35,7 @@ function get_providers() : array {
 		return $providers;
 	}
 
-	return apply_filters( 'minifair.providers', [] );
+	return apply_filters( 'fair_beacon.providers', [] );
 }
 
 /**
