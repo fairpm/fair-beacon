@@ -1,5 +1,5 @@
 {
-    "landingPage": "wp-admin/admin.php?page=minifair",
+    "landingPage": "wp-admin/admin.php?page=fair-beacon",
     "features": {
         "networking": true
     },

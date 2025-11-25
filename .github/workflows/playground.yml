@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
       # Prepare a folder named exactly like the repo as the plugin root.
       # If the repo already has such a folder (common for WP plugins), use it.
       # Otherwise, stage one and copy root files into it (excluding CI junk).
