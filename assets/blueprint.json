@@ -1,0 +1,14 @@
+{
+    "landingPage": "wp-admin/admin.php?page=fair-beacon",
+    "features": {
+        "networking": true
+    },
+    "plugins": [
+        "fair-beacon"
+    ],
+    "steps": [
+        {
+            "step": "login"
+        }
+    ]
+}
