@@ -32,7 +32,6 @@ jobs:
             rsync -a \
               --exclude='.git' \
               --exclude='.github' \
-              --exclude='node_modules' \
               --exclude="${STAGE}" \
               ./ "$STAGE/$REPO/"
             echo "PKG_DIR=$STAGE/$REPO" >> "$GITHUB_OUTPUT"
@@ -42,7 +41,7 @@ jobs:
       - name: Update plugin version with PR number
         run: |
           set -euxo pipefail
-          PLUGIN_FILE="${{ steps.prep.outputs.PKG_DIR }}/${{ github.event.repository.name }}.php"
+          PLUGIN_FILE="${{ steps.prep.outputs.PKG_DIR }}/plugin.php"
           PR_NUMBER="${{ github.event.number }}"
 
           # Extract current version
