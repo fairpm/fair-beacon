@@ -94,6 +94,12 @@ jobs:
 
           echo "blueprint=$ENCODED_BLUEPRINT" >> "$GITHUB_OUTPUT"
 
+      - name: Run Composer install
+        run: |
+          set -euxo pipefail
+          cd "${{ steps.prep.outputs.PKG_DIR }}"
+          composer install
+
       # Upload the FOLDER (not a .zip). The artifact service zips it for us,
       # keeping the top-level folder name inside the archive.
       - name: Upload plugin artifact
