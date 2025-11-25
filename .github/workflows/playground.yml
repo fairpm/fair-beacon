@@ -32,6 +32,7 @@ jobs:
             rsync -a \
               --exclude='.git' \
               --exclude='.github' \
+              --exclude='phpcs.xml.dist' \
               --exclude="${STAGE}" \
               ./ "$STAGE/$REPO/"
             echo "PKG_DIR=$STAGE/$REPO" >> "$GITHUB_OUTPUT"
