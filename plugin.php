@@ -4,6 +4,8 @@
  * Description: Create your own FAIR node.
  * Version: 0.1
  * Author: FAIR Contributors
+ * Author URI: https://fair.pm
+ * Security: security@fair.pm
  * License: GPLv2
  * Requires at least: 6.4
  * Requires PHP: 8.3
