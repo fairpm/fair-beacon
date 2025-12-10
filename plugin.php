@@ -21,6 +21,8 @@ require __DIR__ . '/inc/git-updater/namespace.php';
 require __DIR__ . '/inc/keys/namespace.php';
 require __DIR__ . '/inc/plc/namespace.php';
 require __DIR__ . '/inc/plc/util.php';
-require __DIR__ . '/vendor/autoload.php';
+
+// A composer-based install of this plugin will not have a local vendor/ dir, nor does it need one.
+@include __DIR__ . '/vendor/autoload.php';
 
 bootstrap();
