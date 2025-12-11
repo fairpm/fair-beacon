@@ -109,7 +109,7 @@ function get_package_data( WP_REST_Request $request ) {
 		);
 	}
 
-	set_transient( 'fair-metadata-endpoint-' . $id, $response, Beacon\CACHE_LIFETIME );
+	set_site_transient( 'fair-metadata-endpoint-' . $id, $response, Beacon\CACHE_LIFETIME );
 
 	return $response;
 }
