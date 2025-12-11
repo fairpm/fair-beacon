@@ -22,7 +22,9 @@ require __DIR__ . '/inc/keys/namespace.php';
 require __DIR__ . '/inc/plc/namespace.php';
 require __DIR__ . '/inc/plc/util.php';
 
-// A composer-based install of this plugin will not have a local vendor/ dir, nor does it need one.
-@include __DIR__ . '/vendor/autoload.php';
+// We may already be autoloaded in a composer based setup such as Bedrock, so avoid duplicates if so
+if ( ! interface_exists( FAIR\Beacon\Provider::class ) ) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
 
 bootstrap();
