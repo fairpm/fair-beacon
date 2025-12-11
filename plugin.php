@@ -21,6 +21,10 @@ require __DIR__ . '/inc/git-updater/namespace.php';
 require __DIR__ . '/inc/keys/namespace.php';
 require __DIR__ . '/inc/plc/namespace.php';
 require __DIR__ . '/inc/plc/util.php';
-require __DIR__ . '/vendor/autoload.php';
+
+// We may already be autoloaded in a composer based setup such as Bedrock, so avoid duplicates if so.
+if ( ! interface_exists( FAIR\Beacon\Provider::class ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
 bootstrap();
