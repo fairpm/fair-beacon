@@ -185,6 +185,9 @@ class Provider implements ProviderInterface {
 		$images = [];
 		$versions = $package->release_asset ? $package->release_assets : $package->tags;
 
+		// Limit to latest 10 versions.
+		$versions = array_slice( (array) $versions, 0, 10, true );
+
 		// Banners and icons.
 		$other_assets = [
 			'banner' => $package->banners,
